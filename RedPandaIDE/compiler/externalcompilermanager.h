@@ -9,9 +9,9 @@
 class ExternalCompilerManager : public QObject
 {
     Q_OBJECT
+
 public:
     static ExternalCompilerManager& instance();
-
     ExternalCompilerManager(const ExternalCompilerManager&) = delete;
     ExternalCompilerManager& operator=(const ExternalCompilerManager&) = delete;
 
@@ -19,17 +19,23 @@ public:
     void killCompiler();
     void restartCompiler();
     void compile(const QString& filepath);
-    QString findPascalABCNET(const QString& exename);
     void scheduleRestart(int msecs);
+
+    QString findPascalABCNET(const QString& exename);
+    QString findAdapter(const QString& exename);
 
 private:
     explicit ExternalCompilerManager(QObject *parent = nullptr);
     ~ExternalCompilerManager();
+
     void error(const QString& msg);
     void sendMessage(const std::string& message);
+    void resetZmqSocket();
 
     QProcess* compilerProcess;
+    QProcess* adapterProcess;
     QTimer timer;
+
     zmq::context_t context;
     zmq::socket_t requester;
 };
