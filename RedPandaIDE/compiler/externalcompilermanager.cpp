@@ -216,7 +216,7 @@ void ExternalCompilerManager::sendMessage(const std::string& message)
 
 void ExternalCompilerManager::error(const QString& msg)
 {
-    QRegularExpression regex(R"(\[0\]\[(\d+),(\d+)\]\s+(.:.*?:)\s+(.*?)(?=\s*\[\d+\]|$))");
+    QRegularExpression regex(R"(\[0\]\[(\d+),(\d+)\]\s+((?:[A-Za-z]:)?[^:]+):\s+(.*?)(?=\s*\[\d+\]|$))");
     QRegularExpressionMatchIterator i = regex.globalMatch(msg);
     while (i.hasNext()) {
         QRegularExpressionMatch match = i.next();
