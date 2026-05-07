@@ -134,9 +134,9 @@ FileType getFileType(const QString &filename)
     }
     QFileInfo info(filename);
     if (info.suffix().isEmpty()) {
-        return FileType::Other;
+        return FileType::Pas;
     }
-    return FileType::Other;
+    return FileType::Pas;
 }
 
 bool programHasConsole(const QString & filename)

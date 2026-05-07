@@ -3589,18 +3589,10 @@ void MainWindow::newEditor(const QString& suffix)
         do {
             filename = QString("untitled%1").arg(getNewFileNumber());
             if (suffix.isEmpty()) {
-                if (pSettings->editor().defaultFileCpp()) {
-                    Settings::PCompilerSet compilerSet = pSettings->compilerSets().defaultSet();
-                    if (compilerSet && !compilerSet->canCompileCPP()) {
-                        filename+=".c";
-                    } else {
-                        filename+=".cpp";
-                    }
-                } else
-                    filename+=".c";
+                filename+=".pas";
             } else
                 filename+= "." + suffix;
-
+ 
         } while(mEditorList->hasFilename(filename));
         Editor * editor=mEditorList->newEditor(filename,
                                                pSettings->editor().defaultEncoding(),
@@ -4616,10 +4608,8 @@ void MainWindow::onFilesViewCreateFile()
         dir = mFileSystemModel.rootDirectory();
     }
     QString suffix;
-    if (pSettings->editor().defaultFileCpp())
-        suffix=".cpp";
-    else
-        suffix=".c";
+    // По умолчанию PascalABC.NET
+    suffix=".pas";
     QString fileName = QString("untitled")+suffix;
     int count = 0;
     while (dir.exists(fileName)) {

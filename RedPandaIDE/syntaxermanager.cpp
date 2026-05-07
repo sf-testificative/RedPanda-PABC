@@ -115,9 +115,9 @@ QSynedit::ProgrammingLanguage SyntaxerManager::getLanguage(const QString &filena
     } else if (basename.compare("makefile", Qt::CaseInsensitive)==0) {
         return QSynedit::ProgrammingLanguage::Makefile;
     } else if (suffix.isEmpty()) {
-        return QSynedit::ProgrammingLanguage::CPP;
+        return QSynedit::ProgrammingLanguage::PAS;
     }
-    return QSynedit::ProgrammingLanguage::Textfile;
+    return QSynedit::ProgrammingLanguage::PAS;
 }
 
 QSynedit::PSyntaxer SyntaxerManager::copy(QSynedit::PSyntaxer syntaxer) const
