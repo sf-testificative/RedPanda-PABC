@@ -36,6 +36,7 @@ SystemConsts::SystemConsts(): mDefaultFileFilters()
     addDefaultFileFilter(QObject::tr("Header files"),"*.h *.hh *.hpp");
     addDefaultFileFilter(QObject::tr("GAS files"),"*.s *.S");
     addDefaultFileFilter(QObject::tr("Lua files"),"*.lua");
+    addDefaultFileFilter(QObject::tr("PascalABC.NET files"),"*.pas");
 
     addFileFilter(mIconFileFilters, QObject::tr("Icon files"), "*.ico");
 
@@ -71,6 +72,11 @@ SystemConsts::SystemConsts(): mDefaultFileFilters()
 const QStringList &SystemConsts::defaultFileFilters() const noexcept
 {
     return mDefaultFileFilters;
+}
+
+QString SystemConsts::defaultPasFileFilter() const noexcept
+{
+    return mDefaultFileFilters[7]; // PascalABC.NET files
 }
 
 QString SystemConsts::defaultCFileFilter() const noexcept

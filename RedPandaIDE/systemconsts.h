@@ -134,6 +134,7 @@ class SystemConsts
 public:
     SystemConsts();
     const QStringList& defaultFileFilters() const noexcept;
+    QString defaultPasFileFilter() const noexcept;
     QString defaultCFileFilter() const noexcept;
     QString defaultCPPFileFilter() const noexcept;
     QString defaultAllFileFilter() const noexcept;
