@@ -1173,6 +1173,23 @@ void MainWindow::hideUIElements() {
     ui->tabMessages->removeTab(ui->tabMessages->indexOf(ui->tabTODO));
     ui->tabMessages->removeTab(ui->tabMessages->indexOf(ui->tabBookmark));
     ui->tabMessages->removeTab(ui->tabMessages->indexOf(ui->tabProblem));
+    // hide compiler output by default
+    int toolsIndex = ui->tabMessages->indexOf(ui->tabToolsOutput);
+    if (toolsIndex != -1 && !mRemovedToolsOutput) {
+        mRemovedToolsOutput = ui->tabMessages->widget(toolsIndex);
+        ui->tabMessages->removeTab(toolsIndex);
+    }
+
+    if (ui->actionTools_Output) {
+        ui->actionTools_Output->setChecked(false);
+    }
+
+    // remove compiler set toolbar and compiler options
+    ui->toolbarCompilerSet->setDisabled(true);
+    ui->toolbarCompilerSet->setVisible(false);
+
+    // remove compiler options from execute menu
+    ui->menuExecute->removeAction(ui->actionCompiler_Options);
 
     // set appropriate settings so tabs in the bottom wont show ever
     pSettings->ui().setShowProblem(false);
@@ -5647,11 +5664,14 @@ void MainWindow::onFileRenamedInFileSystemModel(const QString &path, const QStri
 void MainWindow::on_actionOpen_triggered()
 {
     try {
-        QString selectedFileFilter;
-        selectedFileFilter = pSystemConsts->defaultAllFileFilter();
+        QStringList openFilters;
+        openFilters << pSystemConsts->defaultPasFileFilter()
+                    << pSystemConsts->defaultAllFileFilter();
+
+        QString selectedFileFilter = pSystemConsts->defaultPasFileFilter();
+
         QStringList files = QFileDialog::getOpenFileNames(pMainWindow,
-            tr("Open"), QString(), pSystemConsts->defaultFileFilters().join(";;"),
-            &selectedFileFilter);
+                    tr("Open"), QString(), openFilters.join(";;"), &selectedFileFilter);
         if (!files.isEmpty()) {
             QDir::setCurrent(extractFileDir(files[0]));
         }

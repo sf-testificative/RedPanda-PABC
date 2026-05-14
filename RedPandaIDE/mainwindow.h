@@ -340,6 +340,7 @@ private:
     void initEditorActions();
     void changeEditorActionParent(QAction *action, const QString& groupName);
     void backupMenuForEditor(QMenu* menu, QList<QAction *> &backup);
+    QWidget* mRemovedToolsOutput = nullptr;
 
 private slots:
     void setupSlotsForProject();
