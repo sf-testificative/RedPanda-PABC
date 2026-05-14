@@ -4440,9 +4440,9 @@
         <translation>Вывод</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2025"/>
-        <source>New C/C++ File</source>
-        <translation>Новый файл C/C++</translation>
+        <location filename="../mainwindow.ui" line="2022"/>
+        <source>New PascalABC.NET File</source>
+        <translation>Новый файл PascalABC.NET</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2028"/>

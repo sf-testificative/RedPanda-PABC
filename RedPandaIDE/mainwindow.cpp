@@ -240,14 +240,11 @@ MainWindow::MainWindow(QWidget *parent)
     mMenuNew = new QMenu(this);
     mMenuNew->setTitle(tr("New"));
     mMenuNew->addAction(ui->actionNew);
-    mMenuNew->addAction(ui->actionNew_GAS_File);
     mMenuNew->addAction(ui->actionNew_Text_File);
-    mMenuNew->addAction(ui->actionNew_Project);
-    mMenuNew->addSeparator();
-    mMenuNew->addAction(ui->actionNew_Template);
-    mMenuNew->addSeparator();
-    mMenuNew->addAction(ui->actionNew_Class);
-    mMenuNew->addAction(ui->actionNew_Header);
+    // TODO: может понадобиться для PascalABC.NET
+    // mMenuNew->addAction(ui->actionNew_Project);
+    // mMenuNew->addAction(ui->actionNew_Template);
+    // Удалено: actionNew_GAS_File, actionNew_Class, actionNew_Header (C++)
 
     ui->menuFile->insertMenu(ui->actionOpen,mMenuNew);
 
@@ -473,9 +470,10 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
     //set action group name (show in the option / environment / shortcuts)
     ui->actionNew->setData(mMenuNew->title());
-    ui->actionNew_GAS_File->setData(mMenuNew->title());
     ui->actionNew_Text_File->setData(mMenuNew->title());
-    ui->actionNew_Project->setData(mMenuNew->title());
+    // TODO: может понадобиться для PascalABC.NET
+    // ui->actionNew_GAS_File->setData(mMenuNew->title());
+    // ui->actionNew_Project->setData(mMenuNew->title());
 
     ui->actionRemove_Watch->setData(tr("Debug"));
     ui->actionRemove_All_Watches->setData(tr("Debug"));
@@ -797,8 +795,6 @@ void MainWindow::updateProjectActions()
     ui->actionMakeClean->setEnabled(hasProject);
     ui->actionProject_options->setEnabled(hasProject);
     ui->actionClose_Project->setEnabled(hasProject);
-    ui->actionNew_Class->setEnabled(hasProject);
-    ui->actionNew_Header->setEnabled(hasProject);
     ui->actionProject_Open_Folder_In_Explorer->setEnabled(hasProject);
     ui->actionProject_Open_In_Terminal->setEnabled(hasProject);
     updateCompileActions();
@@ -3967,8 +3963,6 @@ void MainWindow::onProjectViewContextMenu(const QPoint &pos)
 #endif
     updateProjectActions();
     menu.addAction(ui->actionProject_New_File);
-    menu.addAction(ui->actionNew_Class);
-    menu.addAction(ui->actionNew_Header);
     menu.addAction(ui->actionAdd_to_project);
     if (!onFolder) {
         menu.addAction(ui->actionRemove_from_project);
@@ -9128,135 +9122,7 @@ void MainWindow::on_actionDelete_to_Word_End_triggered()
 }
 
 
-void MainWindow::on_actionNew_Header_triggered()
-{
-    if (!mProject)
-        return;
-    NewHeaderDialog dialog;
-    dialog.setPath(mProject->folder());
-    QString newFileName;
-    int i=1;
-    do {
-        newFileName = QString("untitled%1").arg(i);
-        newFileName += ".h";
-        i++;
-    } while (QDir(mProject->directory()).exists(newFileName));
-    dialog.setHeaderName(newFileName);
-    if (dialog.exec()==QDialog::Accepted) {
-        QDir dir(dialog.path());
-        if (dialog.headerName().isEmpty()
-                || !dir.exists())
-            return;
-        QString headerFilename = includeTrailingPathDelimiter(dialog.path())+dialog.headerName();
-        if (fileExists(headerFilename)){
-            QMessageBox::critical(this,
-                                  tr("Header Exists"),
-                                  tr("Header file \"%1\" already exists!").arg(headerFilename));
-            return;
-        }
-        QString header_macro = QFileInfo(dialog.headerName()).baseName().toUpper()+"_H";
-        QStringList header;
-        QString indents;
-        if (pSettings->editor().tabToSpaces()) {
-            indents = QString(pSettings->editor().tabWidth(),' ');
-        } else {
-            indents = "\t";
-        }
-        header.append(QString("#ifndef %1").arg(header_macro));
-        header.append(QString("#define %1").arg(header_macro));
-        header.append("");
-        header.append("#endif");
-        stringsToFile(header, headerFilename);
 
-        PProjectUnit newUnit=mProject->addUnit(headerFilename,mProject->rootNode());
-        mProject->saveAll();
-
-        parseFileList(mProject->cppParser());
-        setProjectViewCurrentUnit(newUnit);
-        updateProjectView();
-
-        openFile(headerFilename);
-    }
-    pSettings->ui().setNewClassDialogWidth(dialog.width());
-    pSettings->ui().setNewClassDialogHeight(dialog.height());
-}
-
-
-void MainWindow::on_actionNew_Class_triggered()
-{
-    if (!mProject)
-        return;
-    NewClassDialog dialog(mProject->cppParser());
-    dialog.setPath(mProject->folder());
-    if (dialog.exec()==QDialog::Accepted) {
-        QDir dir(dialog.path());
-        if (dialog.className().isEmpty()
-                || dialog.sourceName().isEmpty()
-                || dialog.headerName().isEmpty()
-                || !dir.exists())
-            return;
-        QString headerFilename = includeTrailingPathDelimiter(dialog.path())+dialog.headerName();
-        QString sourceFilename = includeTrailingPathDelimiter(dialog.path())+dialog.sourceName();
-        if (fileExists(headerFilename)){
-            QMessageBox::critical(this,
-                                  tr("Header Exists"),
-                                  tr("Header file \"%1\" already exists!").arg(headerFilename));
-            return;
-        }
-        if (fileExists(sourceFilename)){
-            QMessageBox::critical(this,
-                                  tr("Source Exists"),
-                                  tr("Source file \"%1\" already exists!").arg(sourceFilename));
-            return;
-        }
-        QString header_macro = dialog.className().toUpper()+"_H";
-        QStringList header;
-        QString indents;
-        if (pSettings->editor().tabToSpaces()) {
-            indents = QString(pSettings->editor().tabWidth(),' ');
-        } else {
-            indents = "\t";
-        }
-        header.append(QString("#ifndef %1").arg(header_macro));
-        header.append(QString("#define %1").arg(header_macro));
-        header.append("");
-        if (dialog.baseClass()) {
-            header.append(QString("#include \"%1\"").arg(extractRelativePath(mProject->directory(),
-                                                                             dialog.baseClass()->fileName)));
-            header.append("");
-            header.append(QString("class %1 : public %2 {").arg(dialog.className(),
-                                                                dialog.baseClass()->fullName));
-        } else
-            header.append(QString("class %1 {").arg(dialog.className()));
-        header.append("public:");
-        header.append("");
-        header.append("private:");
-        header.append("");
-        header.append("};");
-        header.append("");
-        header.append("#endif");
-        stringsToFile(header, headerFilename);
-        QStringList source;
-        source.append(QString("#include \"%1\"").arg(dialog.headerName()));
-        source.append("");
-        source.append("");
-        stringsToFile(source, sourceFilename);
-
-        PProjectUnit newUnit=mProject->addUnit(headerFilename,mProject->rootNode());
-
-        setProjectViewCurrentUnit(newUnit);
-        newUnit=mProject->addUnit(sourceFilename,mProject->rootNode());
-        setProjectViewCurrentUnit(newUnit);
-        mProject->saveAll();
-        parseFileList(mProject->cppParser());
-        updateProjectView();
-
-        openFile(headerFilename);
-        openFile(sourceFilename,false);
-    }
-    pSettings->ui().setNewHeaderDialogWidth(dialog.width());
-    pSettings->ui().setNewHeaderDialogHeight(dialog.height());
-}
 
 #ifdef ENABLE_VCS
 void MainWindow::on_actionGit_Create_Repository_triggered()
@@ -10031,21 +9897,6 @@ void MainWindow::on_actionDocument_triggered()
     QDesktopServices::openUrl(QUrl("http://royqh.net/redpandacpp//docsy/docs/usage"));
 }
 
-
-void MainWindow::on_actionNew_GAS_File_triggered()
-{
-    if (mProject) {
-        if (QMessageBox::question(this,
-                                  tr("New Project File?"),
-                                  tr("Do you want to add the new file to the project?"),
-                                  QMessageBox::Yes | QMessageBox::No,
-                                  QMessageBox::Yes) == QMessageBox::Yes) {
-            newProjectUnitFile("s");
-            return;
-        }
-    }
-    newEditor("s");
-}
 
 void MainWindow::on_actionGNU_Assembler_Manual_triggered()
 {

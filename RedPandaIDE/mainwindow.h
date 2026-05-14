@@ -710,10 +710,6 @@ private slots:
 
     void on_actionDelete_to_Word_End_triggered();
 
-    void on_actionNew_Class_triggered();
-
-    void on_actionNew_Header_triggered();
-
 #ifdef ENABLE_VCS
     void on_actionGit_Create_Repository_triggered();
 
@@ -804,8 +800,6 @@ private slots:
     void on_actionSubmit_Issues_triggered();
 
     void on_actionDocument_triggered();
-
-    void on_actionNew_GAS_File_triggered();
 
     void on_actionGNU_Assembler_Manual_triggered();
 

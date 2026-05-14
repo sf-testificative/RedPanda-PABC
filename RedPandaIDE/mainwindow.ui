@@ -261,14 +261,16 @@
     <addaction name="actionNext_Editor"/>
     <addaction name="actionPrevious_Editor"/>
    </widget>
-   <widget class="QMenu" name="menuProject">
-    <property name="title">
-     <string>Project</string>
-    </property>
-    <addaction name="actionProject_New_File"/>
-    <addaction name="actionNew_Class"/>
-    <addaction name="actionNew_Header"/>
-    <addaction name="actionAdd_to_project"/>
+<widget class="QMenu" name="menuProject">
+     <property name="title">
+      <string>Project</string>
+     </property>
+     <!-- TODO: может понадобиться для PascalABC.NET
+     <addaction name="actionProject_New_File"/>
+     <addaction name="actionNew_Class"/>
+     <addaction name="actionNew_Header"/>
+     -->
+     <addaction name="actionAdd_to_project"/>
     <addaction name="actionRemove_from_project"/>
     <addaction name="separator"/>
     <addaction name="actionProject_Open_Folder_In_Explorer"/>
@@ -2024,21 +2026,21 @@
     </widget>
    </widget>
   </widget>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="../build/Desktop_x86_windows_msvc2019_pe_64bit-Debug/RedPandaIDE/debug/qmake_iconsets_files.qrc">
-     <normaloff>:/resources/iconsets/newlook/actions/01File-01New.svg</normaloff>:/resources/iconsets/newlook/actions/01File-01New.svg</iconset>
-   </property>
-   <property name="text">
-    <string>New C/C++ File</string>
-   </property>
-   <property name="toolTip">
-    <string>New Source File</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-  </action>
+<action name="actionNew">
+    <property name="icon">
+     <iconset resource="../build/Desktop_x86_windows_msvc2019_pe_64bit-Debug/RedPandaIDE/debug/qmake_iconsets_files.qrc">
+      <normaloff>:/resources/iconsets/newlook/actions/01File-01New.svg</normaloff>:/resources/iconsets/newlook/actions/01File-01New.svg</iconset>
+    </property>
+    <property name="text">
+     <string>New PascalABC.NET File</string>
+    </property>
+    <property name="toolTip">
+     <string>New PascalABC.NET File</string>
+    </property>
+    <property name="shortcut">
+     <string>Ctrl+N</string>
+    </property>
+   </action>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../build/Desktop_x86_windows_msvc2019_pe_64bit-Debug/RedPandaIDE/debug/qmake_iconsets_files.qrc">
@@ -2905,19 +2907,8 @@
     <string>Ctrl+Shift+E</string>
    </property>
   </action>
-  <action name="actionNew_Class">
-   <property name="text">
-    <string>New Class...</string>
-   </property>
-  </action>
-  <action name="actionNew_Header">
-   <property name="text">
-    <string>New Header...</string>
-   </property>
-   <property name="toolTip">
-    <string>New Header...</string>
-   </property>
-  </action>
+
+
   <action name="actionWebsite">
    <property name="text">
     <string>Website</string>
@@ -3082,11 +3073,7 @@
     <string>F1</string>
    </property>
   </action>
-  <action name="actionNew_GAS_File">
-   <property name="text">
-    <string>New GAS File</string>
-   </property>
-  </action>
+
   <action name="actionGNU_Assembler_Manual">
    <property name="text">
     <string>GNU Assembler Manual</string>
@@ -3102,20 +3089,21 @@
     <string>IA-32 Assembly Language Reference Manual</string>
    </property>
   </action>
-  <action name="actionAdd_Watchpoint">
-   <property name="text">
-    <string>Add Watchpoint...</string>
-   </property>
-   <property name="toolTip">
-    <string>Add a watchpoint that's triggered when it's modified.</string>
-   </property>
-  </action>
-  <action name="actionNew_Text_File">
-   <property name="text">
-    <string>New Text File</string>
-   </property>
-  </action>
-  <action name="actionPage_Up">
+<action name="actionAdd_Watchpoint">
+    <property name="text">
+     <string>Add Watchpoint...</string>
+    </property>
+    <property name="toolTip">
+     <string>Add a watchpoint that's triggered when it's modified.</string>
+    </property>
+   </action>
+   <action name="actionNew_Text_File">
+    <property name="text">
+     <string>New Text File</string>
+    </property>
+   </action>
+
+   <action name="actionPage_Up">
    <property name="text">
     <string>Page Up</string>
    </property>
