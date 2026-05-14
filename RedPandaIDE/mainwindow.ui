@@ -311,23 +311,22 @@
     <property name="title">
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuTool_Windows">
-     <property name="title">
-      <string>Tool Panels</string>
-     </property>
-     <addaction name="actionProject"/>
-     <addaction name="actionWatch"/>
-     <addaction name="actionStructure"/>
-     <addaction name="actionFiles"/>
-     <addaction name="actionProblem_Set"/>
-     <addaction name="separator"/>
-     <addaction name="actionIssues"/>
-     <addaction name="actionTools_Output"/>
-     <addaction name="actionDebug_Window"/>
-     <addaction name="actionSearch"/>
-     <addaction name="actionTODO"/>
-     <addaction name="actionBookmark"/>
-     <addaction name="actionProblem"/>
+<widget class="QMenu" name="menuTool_Windows">
+      <property name="title">
+       <string>Tool Panels</string>
+      </property>
+      <!-- TODO: возможно понадобятся для PascalABC.NET
+      <addaction name="actionProject"/>
+      <addaction name="actionWatch"/>
+      <addaction name="actionStructure"/>
+      <addaction name="actionFiles"/>
+      <addaction name="actionProblem_Set"/>
+      -->
+      <addaction name="separator"/>
+      <addaction name="actionIssues"/>
+      <addaction name="actionTools_Output"/>
+      <addaction name="actionSearch"/>
+      <!-- Удалено для C++: actionDebug_Window, actionTODO, actionBookmark, actionProblem -->
     </widget>
     <addaction name="actionTool_Window_Bars"/>
     <addaction name="menuTool_Windows"/>

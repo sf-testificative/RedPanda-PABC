@@ -4269,7 +4269,7 @@
         <location filename="../mainwindow.cpp" line="5962"/>
         <location filename="../mainwindow.cpp" line="8255"/>
         <source>Issues</source>
-        <translation>Проблемы</translation>
+        <translation>Ошибки</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="996"/>
