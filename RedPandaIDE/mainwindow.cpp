@@ -7497,6 +7497,10 @@ void MainWindow::showHideMessagesTab(QWidget *widget, bool show)
                     break;
                 }
             }
+            // Открепляем виджет от предыдущего родителя перед добавлением
+            if (widget->parent()) {
+                widget->setParent(nullptr);
+            }
             if (insert>=0) {
                 ui->tabMessages->insertTab(insert, widget, info->icon, info->text);
             } else {
