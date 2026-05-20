@@ -241,23 +241,21 @@ MainWindow::MainWindow(QWidget *parent)
     mMenuNew->setTitle(tr("New"));
     mMenuNew->addAction(ui->actionNew);
     mMenuNew->addAction(ui->actionNew_Text_File);
-    // TODO: может понадобиться для PascalABC.NET
     // mMenuNew->addAction(ui->actionNew_Project);
     // mMenuNew->addAction(ui->actionNew_Template);
-    // Удалено: actionNew_GAS_File, actionNew_Class, actionNew_Header (C++)
 
     ui->menuFile->insertMenu(ui->actionOpen,mMenuNew);
 
     mMenuExport = new QMenu(tr("Export"));
-    mMenuExport->addAction(ui->actionExport_As_RTF);
-    mMenuExport->addAction(ui->actionExport_As_HTML);
-    ui->menuFile->insertMenu(ui->actionPrint,mMenuExport);
+    // mMenuExport->addAction(ui->actionExport_As_RTF);
+    // mMenuExport->addAction(ui->actionExport_As_HTML);
+    // ui->menuFile->insertMenu(ui->actionPrint,mMenuExport);
 
     buildEncodingMenu();
 
     mMenuRecentProjects = new QMenu();
     mMenuRecentProjects->setTitle(tr("Recent Projects"));
-    ui->menuFile->insertMenu(ui->actionExit, mMenuRecentProjects);
+    // ui->menuFile->insertMenu(ui->actionExit, mMenuRecentProjects);
 
     mMenuRecentFiles = new QMenu();
     mMenuRecentFiles->setTitle(tr("Recent Files"));
@@ -267,10 +265,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     mMenuInsertCodeSnippet = new QMenu();
     mMenuInsertCodeSnippet->setTitle(tr("Insert Snippet"));
-    ui->menuCode->insertMenu(ui->actionTrim_trailing_spaces,mMenuInsertCodeSnippet);
-    ui->menuCode->insertSeparator(ui->actionTrim_trailing_spaces);
-    connect(mMenuInsertCodeSnippet,&QMenu::aboutToShow,
-            this, &MainWindow::onShowInsertCodeSnippetMenu);
+    // ui->menuCode->insertMenu(ui->actionTrim_trailing_spaces,mMenuInsertCodeSnippet);
+    // ui->menuCode->insertSeparator(ui->actionTrim_trailing_spaces);
+    // connect(mMenuInsertCodeSnippet,&QMenu::aboutToShow,
+    //         this, &MainWindow::onShowInsertCodeSnippetMenu);
 
     mCPUDialog = nullptr;
 
@@ -471,7 +469,6 @@ MainWindow::MainWindow(QWidget *parent)
     //set action group name (show in the option / environment / shortcuts)
     ui->actionNew->setData(mMenuNew->title());
     ui->actionNew_Text_File->setData(mMenuNew->title());
-    // TODO: может понадобиться для PascalABC.NET
     // ui->actionNew_GAS_File->setData(mMenuNew->title());
     // ui->actionNew_Project->setData(mMenuNew->title());
 
@@ -794,7 +791,6 @@ void MainWindow::updateProjectActions()
     ui->actionRemove_from_project->setEnabled(hasProject && ui->projectView->selectionModel()->selectedIndexes().count()>0);
     ui->actionMakeClean->setEnabled(hasProject);
     ui->actionProject_options->setEnabled(hasProject);
-    ui->actionClose_Project->setEnabled(hasProject);
     ui->actionProject_Open_Folder_In_Explorer->setEnabled(hasProject);
     ui->actionProject_Open_In_Terminal->setEnabled(hasProject);
     updateCompileActions();
@@ -1148,6 +1144,10 @@ void MainWindow::hideUIElements() {
     for (auto& act: ui->toolbarDebug->actions()) {
         ui->menuExecute->removeAction(act);
     }
+    ui->menuEdit->removeAction(ui->actionToggleComment);
+    ui->menuEdit->removeAction(ui->actionToggle_Block_Comment);
+    ui->actionToggleComment->setVisible(false);
+    ui->actionToggle_Block_Comment->setVisible(false);
     ui->menuExecute->removeAction(ui->actionGenerate_Assembly);
     ui->menuExecute->removeAction(ui->actionView_CPU_Window);
     ui->menuExecute->removeAction(ui->actionAdd_Watch);
@@ -1163,7 +1163,7 @@ void MainWindow::hideUIElements() {
     ui->menubar->removeAction(ui->menuRefactor->menuAction());
     ui->menubar->removeAction(ui->menuProject->menuAction());
     ui->toolbarCode->removeAction(ui->actionReformat_Code);
-
+    ui->menuCode->removeAction(ui->actionTrim_trailing_spaces);
     // remove tabs in the bottom
     ui->tabMessages->removeTab(ui->tabMessages->indexOf(ui->tabDebug));
     ui->tabMessages->removeTab(ui->tabMessages->indexOf(ui->tabTODO));
@@ -1183,7 +1183,6 @@ void MainWindow::hideUIElements() {
     // remove compiler set toolbar and compiler options
     ui->toolbarCompilerSet->setDisabled(true);
     ui->toolbarCompilerSet->setVisible(false);
-
     // remove compiler options from execute menu
     ui->menuExecute->removeAction(ui->actionCompiler_Options);
 
@@ -2053,7 +2052,6 @@ void MainWindow::updateActionIcons()
     ui->actionSaveAs->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_SAVE_AS));
     ui->actionSaveAll->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_SAVE_ALL));
     ui->actionClose->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_CLOSE));
-    ui->actionClose_Project->setIcon(pIconsManager->getIcon(IconsManager::ACTION_PROJECT_CLOSE));
     ui->actionClose_All->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_CLOSE_ALL));
     ui->actionClose_Others->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_CLOSE_ALL));
     ui->actionPrint->setIcon(pIconsManager->getIcon(IconsManager::ACTION_FILE_PRINT));
@@ -4002,7 +4000,6 @@ void MainWindow::onProjectViewContextMenu(const QPoint &pos)
     }
     menu.addAction(ui->actionProject_options);
     menu.addSeparator();
-    menu.addAction(ui->actionClose_Project);
 
 #ifdef ENABLE_VCS
     if (pSettings->vcs().gitOk() && hasRepository) {
@@ -4619,7 +4616,7 @@ void MainWindow::onFilesViewCreateFile()
         dir = mFileSystemModel.rootDirectory();
     }
     QString suffix;
-    // По умолчанию PascalABC.NET
+    // PascalABC.NET as default
     suffix=".pas";
     QString fileName = QString("untitled")+suffix;
     int count = 0;
@@ -7088,12 +7085,12 @@ void MainWindow::on_projectView_doubleClicked(const QModelIndex &index)
 }
 
 
-void MainWindow::on_actionClose_Project_triggered()
-{
-    mClosing = true;
-    closeProject(true);
-    mClosing = false;
-}
+// void MainWindow::on_actionClose_Project_triggered()
+// {
+//     mClosing = true;
+//     closeProject(true);
+//     mClosing = false;
+// }
 
 
 void MainWindow::on_actionProject_options_triggered()
@@ -7491,7 +7488,6 @@ void MainWindow::showHideMessagesTab(QWidget *widget, bool show)
                     break;
                 }
             }
-            // Открепляем виджет от предыдущего родителя перед добавлением
             if (widget->parent()) {
                 widget->setParent(nullptr);
             }

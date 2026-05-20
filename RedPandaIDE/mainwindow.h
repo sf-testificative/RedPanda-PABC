@@ -585,7 +585,7 @@ private slots:
 
     void on_projectView_doubleClicked(const QModelIndex &index);
 
-    void on_actionClose_Project_triggered();
+    // void on_actionClose_Project_triggered();
 
     void on_actionProject_options_triggered();
 
