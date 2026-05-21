@@ -156,8 +156,8 @@ PSettingsDialog SettingsDialog::optionDialog()
     widget = new EnvironmentProgramsWidget(tr("Terminal"),tr("Environment"));
     dialog->addWidget(widget);
 
-    widget = new EnvironmentPerformanceWidget(tr("Performance"),tr("Environment"));
-    dialog->addWidget(widget);
+    // widget = new EnvironmentPerformanceWidget(tr("Performance"),tr("Environment"));
+    // dialog->addWidget(widget);
 
     widget = new EnvironmentFoldersWidget(tr("Folders / Restore Default Settings"),tr("Environment"));
     connect((EnvironmentFoldersWidget*)widget,
@@ -166,11 +166,11 @@ PSettingsDialog SettingsDialog::optionDialog()
             &SettingsDialog::closeAndQuit);
     dialog->addWidget(widget);
 
-    widget = new CompilerSetOptionWidget(tr("Compiler Set"),tr("Compiler"));
-    dialog->addWidget(widget);
+    // widget = new CompilerSetOptionWidget(tr("Compiler Set"),tr("Compiler"));
+    // dialog->addWidget(widget);
 
-    widget = new CompilerAutolinkWidget(tr("Auto Link"),tr("Compiler"));
-    dialog->addWidget(widget);
+    // widget = new CompilerAutolinkWidget(tr("Auto Link"),tr("Compiler"));
+    // dialog->addWidget(widget);
 
     widget = new EditorGeneralWidget(tr("General"),tr("Editor"));
     dialog->addWidget(widget);
@@ -178,20 +178,20 @@ PSettingsDialog SettingsDialog::optionDialog()
     widget = new EditorFontWidget(tr("Font"),tr("Editor"));
     dialog->addWidget(widget);
 
-    widget = new EditorClipboardWidget(tr("Copy & Export"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorClipboardWidget(tr("Copy & Export"),tr("Editor"));
+    // dialog->addWidget(widget);
 
     widget = new EditorColorSchemeWidget(tr("Color"),tr("Editor"));
     dialog->addWidget(widget);
 
-    widget = new EditorCodeCompletionWidget(tr("Code Completion"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorCodeCompletionWidget(tr("Code Completion"),tr("Editor"));
+    // dialog->addWidget(widget);
 
-    widget = new EditorSymbolCompletionWidget(tr("Symbol Completion"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorSymbolCompletionWidget(tr("Symbol Completion"),tr("Editor"));
+    // dialog->addWidget(widget);
 
-    widget = new EditorSnippetWidget(tr("Snippet"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorSnippetWidget(tr("Snippet"),tr("Editor"));
+    // dialog->addWidget(widget);
 
     widget = new EditorSyntaxCheckWidget(tr("Auto Syntax Checking"),tr("Editor"));
     dialog->addWidget(widget);
@@ -202,31 +202,31 @@ PSettingsDialog SettingsDialog::optionDialog()
     widget = new EditorAutoSaveWidget(tr("Auto save"),tr("Editor"));
     dialog->addWidget(widget);
 
-    widget = new EditorMiscWidget(tr("Misc"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorMiscWidget(tr("Misc"),tr("Editor"));
+    // dialog->addWidget(widget);
 
-    widget = new EditorCustomCTypeKeywordsWidget(tr("Custom C/C++ Keywords"),tr("Languages"));
-    dialog->addWidget(widget);
+    // widget = new EditorCustomCTypeKeywordsWidget(tr("Custom C/C++ Keywords"),tr("Languages"));
+    // dialog->addWidget(widget);
 
 //    widget = new LanguageCFormatWidget(tr("C/C++ Format"),tr("Languages"));
 //    dialog->addWidget(widget);
-    widget = new LanguageAsmGenerationWidget(tr("ASM Generation"),tr("Languages"));
-    dialog->addWidget(widget);
+    // widget = new LanguageAsmGenerationWidget(tr("ASM Generation"),tr("Languages"));
+    // dialog->addWidget(widget);
 
     widget = new ExecutorGeneralWidget(tr("General"),tr("Program Runner"));
     dialog->addWidget(widget);
 
-    widget = new ExecutorProblemSetWidget(tr("Problem Set"),tr("Program Runner"));
-    dialog->addWidget(widget);
+    // widget = new ExecutorProblemSetWidget(tr("Problem Set"),tr("Program Runner"));
+    // dialog->addWidget(widget);
 
-    widget = new DebugGeneralWidget(tr("General"),tr("Debugger"));
-    dialog->addWidget(widget);
+    // widget = new DebugGeneralWidget(tr("General"),tr("Debugger"));
+    // dialog->addWidget(widget);
 
-    widget = new FormatterGeneralWidget(tr("General"),tr("Code Formatter"));
-    dialog->addWidget(widget);
+    // widget = new FormatterGeneralWidget(tr("General"),tr("Code Formatter"));
+    // dialog->addWidget(widget);
 
-    widget = new FormatterPathWidget(tr("Program"),tr("Code Formatter"));
-    dialog->addWidget(widget);
+    // widget = new FormatterPathWidget(tr("Program"),tr("Code Formatter"));
+    // dialog->addWidget(widget);
 
     widget = new ToolsGeneralWidget(tr("General"),tr("Tools"));
     dialog->addWidget(widget);

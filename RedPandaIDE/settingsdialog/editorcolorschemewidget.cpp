@@ -73,33 +73,33 @@ EditorColorSchemeWidget::EditorColorSchemeWidget(const QString& name, const QStr
             &EditorColorSchemeWidget::onSettingChanged);
     ui->editDemo->setUseCodeFolding(true);
     ui->editDemo->document()->setText(
-            "#include <iostream>\n"
-            "#include <conio.h>\n"
-            "\n"
-            "int x=10;\n"
-            "\n"
-            "int main(int argc, char **argv)\n"
-            "{\n"
-            "    int numbers[20]; // warning line\n"
-            "    float average, total; // bookmark\n"
-            "    for (int i = 0; i <= 19; i++) // active breakpoint\n"
-            "    { // breakpoint\n"
-            "        numbers[i] = i+x;\n"
-            "        Total += i; // error line\n"
-            "    }\n"
-            "    average = total / 20; // comment\n"
-            "    std::cout << \"total: \" << total <<\n"
-            "    \"\\nAverage: \" << average;\n"
-            "    getch();\n"
-            "}\n"
+            "begin\n"
+            "   var name := 'World';\n"
+            "   print('Hello, ' + name1 + '!');\n"
+            "end.\n"
+            // "\n"
+            // "int main(int argc, char **argv)\n"
+            // "{\n"
+            // "    int numbers[20]; // warning line\n"
+            // "    float average, total; // bookmark\n"
+            // "    for (int i = 0; i <= 19; i++) // active breakpoint\n"
+            // "    { // breakpoint\n"
+            // "        numbers[i] = i+x;\n"
+            // "        Total += i; // error line\n"
+            // "    }\n"
+            // "    average = total / 20; // comment\n"
+            // "    std::cout << \"total: \" << total <<\n"
+            // "    \"\\nAverage: \" << average;\n"
+            // "    getch();\n"
+            // "}\n"
                 );
     ui->editDemo->setReadOnly(true);
-    ui->editDemo->toggleBreakpoint(11);
-    ui->editDemo->toggleBookmark(9);
-    ui->editDemo->addSyntaxIssues(13, 9, 14, CompileIssueType::Error, "[Error] 'Total' was not declared in this scope; did you mean 'total'?");
-    ui->editDemo->addSyntaxIssues(8, 9, 16, CompileIssueType::Warning, "[Warning] variable 'numbers' set but not used [-Wunused-but-set-variable]");
-    ui->editDemo->setCaretY(9);
-    ui->editDemo->setActiveBreakpointFocus(10,false);
+    // ui->editDemo->toggleBreakpoint(2);
+    // ui->editDemo->toggleBookmark(9);
+    ui->editDemo->addSyntaxIssues(3, 22, 27, CompileIssueType::Error, "[Error]");
+    // ui->editDemo->addSyntaxIssues(8, 9, 16, CompileIssueType::Warning, "[Warning] variable 'numbers' set but not used [-Wunused-but-set-variable]");
+    // ui->editDemo->setCaretY(9);
+    // ui->editDemo->setActiveBreakpointFocus(10,false);
     ui->editDemo->setCaretXY(QSynedit::BufferCoord{1,1});
     ui->editDemo->reparseDocument();
     ui->editDemo->invalidate();
