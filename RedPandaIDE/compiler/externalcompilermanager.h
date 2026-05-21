@@ -21,6 +21,8 @@ public:
     void compile(const QString& filepath);
     void scheduleRestart(int msecs);
 
+    int debugMode = 0; // 0 = Release, 1 = Debug
+
     QString findPascalABCNET(const QString& exename);
     QString findAdapter(const QString& exename);
 
