@@ -237,6 +237,9 @@ void ExternalCompilerManager::compile(const QString& filepath)
     std::string message = "215#5#" + filepath.toStdString();
     qDebug() << QString::fromStdString(message);
     sendMessage(message);
+    std::string debugCmd = "212 " + std::to_string(debugMode);
+    qDebug() << QString::fromStdString(debugCmd);
+    sendMessage(debugCmd);
     sendMessage("210");
     pMainWindow->onCompileFinished(filepath, true);
 }
