@@ -51,6 +51,7 @@ Settings::Settings(const QString &filename):
     mDirs(this),
     mEditor(this),
     mEnvironment(this),
+    mCompiler(this),
     mCompilerSets(this),
     mExecutor(this),
     mDebugger(this),
@@ -117,6 +118,7 @@ void Settings::load()
     mCompilerSets.loadSets();
     mEnvironment.load();
     mEditor.load();
+    mCompiler.load();
     mExecutor.load();
     mDebugger.load();
     mCodeCompletion.load();
@@ -143,6 +145,11 @@ Settings::Dirs &Settings::dirs()
 Settings::Editor &Settings::editor()
 {
     return mEditor;
+}
+
+Settings::Compiler &Settings::compiler()
+{
+    return mCompiler;
 }
 
 Settings::CompilerSets &Settings::compilerSets()
@@ -3243,7 +3250,8 @@ void Settings::CompilerSets::findSets()
             compilerHint = AddOn::CompilerHintExecutor{}(script);
         } catch (const AddOn::LuaError &e) {
             QMessageBox::critical(nullptr,
-                                  QObject::tr("Error executing platform compiler hint add-on"),
+                                  QObject::tr("Error executing platform "
+                                              "hint add-on"),
                                   e.reason());
         }
         if (!compilerHint.empty()) {
@@ -3744,10 +3752,33 @@ bool Settings::CompilerSets::isTarget64Bit(const QString &target)
     return targets.contains(target);
 }
 
+Settings::Compiler::Compiler(Settings *settings):_Base(settings, SETTING_ENVIRONMENT)
+{
+
+}
+
+void Settings::Compiler::setDebugMode(int _mDebugMode){
+    if (_mDebugMode==0 || _mDebugMode==1)
+        mDebugMode = _mDebugMode;
+}
+
+bool Settings::Compiler::getDebugMode() const{
+    return mDebugMode;
+}
+
+void Settings::Compiler::doSave(){
+    saveValue("debugMode", mDebugMode);
+}
+
+void Settings::Compiler::doLoad(){
+    mDebugMode = boolValue("debugMode", false);
+}
+
 Settings::Environment::Environment(Settings *settings):_Base(settings, SETTING_ENVIRONMENT)
 {
 
 }
+
 
 void Settings::Environment::doLoad()
 {
@@ -4902,6 +4933,7 @@ void Settings::CodeCompletion::doLoad()
     mShareParser = boolValue("share_parser",shouldShare);
 }
 
+
 Settings::CodeFormatter::CodeFormatter(Settings *settings):
     _Base(settings,SETTING_CODE_FORMATTER)
 {
@@ -4911,7 +4943,7 @@ Settings::CodeFormatter::CodeFormatter(Settings *settings):
 QStringList Settings::CodeFormatter::getArguments()
 {
     QStringList result;
-    switch(mBraceStyle) {
+    switch(mBraceStyle) {void setDebugMode(int);
     case FormatterBraceStyle::fbsDefault:
         break;
     case FormatterBraceStyle::fbsAllman:
@@ -5101,6 +5133,8 @@ QStringList Settings::CodeFormatter::getArguments()
     }
     return result;
 }
+
+
 
 int Settings::CodeFormatter::indentStyle() const
 {

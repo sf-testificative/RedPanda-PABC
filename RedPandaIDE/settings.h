@@ -705,6 +705,19 @@ public:
 
     };
 
+    class Compiler: public _Base{
+        bool mDebugMode;
+    public:
+        explicit Compiler(Settings* settings);
+        void setDebugMode(int);
+        bool getDebugMode() const;
+    signals:
+        void debugStateSend(int);
+    protected:
+        void doSave() override;
+        void doLoad() override;
+    };
+
     class CodeFormatter: public _Base {
     public:
         explicit CodeFormatter(Settings* settings);
@@ -1605,6 +1618,7 @@ public:
 
     Dirs& dirs();
     Editor& editor();
+    Compiler& compiler();
     CompilerSets& compilerSets();
     Environment& environment();
     Executor& executor();
@@ -1623,6 +1637,7 @@ private:
     QSettings mSettings;
     Dirs mDirs;
     Editor mEditor;
+    Compiler mCompiler;
     Environment mEnvironment;
     CompilerSets mCompilerSets;
     Executor mExecutor;

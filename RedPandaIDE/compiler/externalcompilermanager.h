@@ -5,6 +5,7 @@
 #include <QProcess>
 #include <QTimer>
 #include <zmq.hpp>
+#include "settings.h"
 
 class ExternalCompilerManager : public QObject
 {
@@ -15,6 +16,7 @@ public:
     ExternalCompilerManager(const ExternalCompilerManager&) = delete;
     ExternalCompilerManager& operator=(const ExternalCompilerManager&) = delete;
 
+    void setDebugMode(int);
     void startCompiler();
     void killCompiler();
     void restartCompiler();

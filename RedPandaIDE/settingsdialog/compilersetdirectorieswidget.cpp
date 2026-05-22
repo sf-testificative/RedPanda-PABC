@@ -115,3 +115,4 @@ void CompilerSetDirectoriesWidget::onUpdateIcons()
     pIconsManager->setIcon(ui->btnDelete, IconsManager::ACTION_MISC_REMOVE);
     pIconsManager->setIcon(ui->btnRemoveInvalid, IconsManager::ACTION_MISC_VALIDATE);
 }
+

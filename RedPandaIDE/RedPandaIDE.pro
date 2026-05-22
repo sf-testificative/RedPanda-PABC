@@ -156,6 +156,7 @@ SOURCES += \
     projectoptions.cpp \
     projecttemplate.cpp \
     settingsdialog/compilerautolinkwidget.cpp \
+    settingsdialog/compilerdebugwidget.cpp \
     settingsdialog/debuggeneralwidget.cpp \
     settingsdialog/editorautosavewidget.cpp \
     settingsdialog/editorcodecompletionwidget.cpp \
@@ -294,6 +295,7 @@ HEADERS += \
     projectoptions.h \
     projecttemplate.h \
     settingsdialog/compilerautolinkwidget.h \
+    settingsdialog/compilerdebugwidget.h \
     settingsdialog/debuggeneralwidget.h \
     settingsdialog/editorautosavewidget.h \
     settingsdialog/editorcodecompletionwidget.h \
@@ -394,6 +396,7 @@ HEADERS += \
 
 FORMS += \
     settingsdialog/compilerautolinkwidget.ui \
+    settingsdialog/compilerdebugwidget.ui \
     settingsdialog/debuggeneralwidget.ui \
     settingsdialog/editorautosavewidget.ui \
     settingsdialog/editorcodecompletionwidget.ui \

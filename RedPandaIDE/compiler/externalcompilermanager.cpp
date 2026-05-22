@@ -49,6 +49,11 @@ ExternalCompilerManager::~ExternalCompilerManager()
     context.close();
 }
 
+void ExternalCompilerManager::setDebugMode(int state)
+{
+    debugMode = state;
+}
+
 QString ExternalCompilerManager::findAdapter(const QString& exename)
 {
     QStringList possiblePaths = {
@@ -238,6 +243,7 @@ void ExternalCompilerManager::compile(const QString& filepath)
     qDebug() << QString::fromStdString(message);
     sendMessage(message);
     std::string debugCmd = "212 " + std::to_string(debugMode);
+    qDebug() << "DebugMode is: " + QString::fromStdString(std::to_string(debugMode));
     qDebug() << QString::fromStdString(debugCmd);
     sendMessage(debugCmd);
     sendMessage("210");

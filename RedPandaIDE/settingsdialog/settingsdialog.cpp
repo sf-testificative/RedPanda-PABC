@@ -20,6 +20,7 @@
 #include "settingswidget.h"
 #include "compilersetoptionwidget.h"
 #include "compilerautolinkwidget.h"
+#include "compilerdebugwidget.h"
 #include "editorgeneralwidget.h"
 #include "editorfontwidget.h"
 #include "editorclipboardwidget.h"
@@ -172,6 +173,9 @@ PSettingsDialog SettingsDialog::optionDialog()
     // widget = new CompilerAutolinkWidget(tr("Auto Link"),tr("Compiler"));
     // dialog->addWidget(widget);
 
+    widget = new compilerdebugwidget(tr("General"), tr("Compiler"));
+    dialog->addWidget(widget);
+
     widget = new EditorGeneralWidget(tr("General"),tr("Editor"));
     dialog->addWidget(widget);
 
@@ -201,6 +205,7 @@ PSettingsDialog SettingsDialog::optionDialog()
 
     widget = new EditorAutoSaveWidget(tr("Auto save"),tr("Editor"));
     dialog->addWidget(widget);
+
 
     // widget = new EditorMiscWidget(tr("Misc"),tr("Editor"));
     // dialog->addWidget(widget);
@@ -402,3 +407,6 @@ void SettingsDialog::showWidget(const QModelIndex &index)
         emit ui->widgetsView->clicked(childIndex);
     }
 }
+
+
+

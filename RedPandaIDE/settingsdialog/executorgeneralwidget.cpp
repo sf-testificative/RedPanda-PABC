@@ -97,3 +97,6 @@ void ExecutorGeneralWidget::on_txtExecuteParamaters_textChanged(const QString &c
     QJsonArray obj = QJsonArray::fromStringList(parsed);
     ui->txtParsedArgsInJson->setText(QJsonDocument{obj}.toJson());
 }
+
+
+

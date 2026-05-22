@@ -64,6 +64,7 @@ private slots:
     void on_btnApply_pressed();
 
     void on_btnOk_pressed();
+
 private:
     void saveCurrentPageSettings(bool confirm);
 private:

@@ -2360,6 +2360,7 @@ bool MainWindow::compile(bool rebuild, CppCompileType compileType)
             stretchMessagesPanel(true);
             ui->tabMessages->setCurrentWidget(ui->tabToolsOutput);
             if (editor->filename().contains(".pas")) {
+                ExternalCompilerManager::instance().setDebugMode(pSettings->compiler().getDebugMode() ? 1 : 0);
                 ExternalCompilerManager::instance().compile(editor->filename());
             }
             else {

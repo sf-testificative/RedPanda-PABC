@@ -527,7 +527,7 @@ QStringList Compiler::getCIncludeArguments()
     return result;
 }
 
-QStringList Compiler::getProjectIncludeArguments()
+QStringList Compiler::  getProjectIncludeArguments()
 {
     QStringList result;
     if (mProject) {
