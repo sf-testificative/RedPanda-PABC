@@ -18,7 +18,7 @@
     <rect>
      <x>30</x>
      <y>20</y>
-     <width>291</width>
+     <width>311</width>
      <height>21</height>
     </rect>
    </property>
@@ -28,9 +28,9 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="text">
-    <string>Генерировать отладочную информацию</string>
-   </property>
+    <property name="text">
+     <string>Generate debug information</string>
+    </property>
   </widget>
  </widget>
  <resources/>

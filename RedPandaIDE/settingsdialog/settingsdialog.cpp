@@ -197,11 +197,11 @@ PSettingsDialog SettingsDialog::optionDialog()
     // widget = new EditorSnippetWidget(tr("Snippet"),tr("Editor"));
     // dialog->addWidget(widget);
 
-    widget = new EditorSyntaxCheckWidget(tr("Auto Syntax Checking"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorSyntaxCheckWidget(tr("Auto Syntax Checking"),tr("Editor"));
+    // dialog->addWidget(widget);
 
-    widget = new EditorTooltipsWidget(tr("Tooltips"),tr("Editor"));
-    dialog->addWidget(widget);
+    // widget = new EditorTooltipsWidget(tr("Tooltips"),tr("Editor"));
+    // dialog->addWidget(widget);
 
     widget = new EditorAutoSaveWidget(tr("Auto save"),tr("Editor"));
     dialog->addWidget(widget);
