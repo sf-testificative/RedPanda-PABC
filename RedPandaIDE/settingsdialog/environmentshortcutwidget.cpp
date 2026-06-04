@@ -73,22 +73,23 @@ void EnvironmentShortcutModel::reload()
     foreach( const QMenu* menu, menus) {
         if (menu->title().isEmpty())
             continue;
+        if (!isShortcutSectionAllowed(menu->objectName()))
+            continue;
         loadShortCutsOfMenu(menu, actions);
     }
     foreach (QAction* action,actions) {
-        if (!action->text().isEmpty()) {
-            PEnvironmentShortcut item = std::make_shared<EnvironmentShortcut>();
-            item->name = action->objectName();
-            QString groupName = action->data().toString();
-            if (!groupName.isEmpty())
-                item->fullPath = QString("%1 > %2").arg(groupName,action->text());
-            else
-                item->fullPath = QString("%1 > %2").arg(tr("action"),action->text());
-            item->action = action;
-            item->shortcut = action->shortcut().toString().trimmed();
-            item->isAction = true;
-            mShortcuts.append(item);
-        }
+        if (action->text().isEmpty())
+            continue;
+        QString groupName = action->data().toString();
+        if (groupName.isEmpty() || !isShortcutSectionAllowed(groupName))
+            continue;
+        PEnvironmentShortcut item = std::make_shared<EnvironmentShortcut>();
+        item->name = action->objectName();
+        item->fullPath = QString("%1 > %2").arg(groupName,action->text());
+        item->action = action;
+        item->shortcut = action->shortcut().toString().trimmed();
+        item->isAction = true;
+        mShortcuts.append(item);
     }
     endResetModel();
 }

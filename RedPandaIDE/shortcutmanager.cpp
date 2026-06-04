@@ -24,6 +24,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QMessageBox>
+#include <QStringList>
 
 ShortcutManager::ShortcutManager(QObject *parent) : QObject(parent)
 {
@@ -114,6 +115,18 @@ void ShortcutManager::setShortcuts(QList<PEnvironmentShortcut> shortcuts)
             continue;
         mShortcuts.insert(shortcut->name,shortcut);
     }
+}
+
+bool isShortcutSectionAllowed(const QString& name) {
+    static const QStringList allowed = {
+        "menuEdit", "menuSelection", "menuView", "menuSearch",
+        "menuCode", "menuRefactor", "menuExecute", "menuTools",
+        "menuWindow",
+        "menuMove_Caret", "menuTool_Windows",
+        "Edit", "Selection", "Code", "Refactor",
+        "Move Caret", "File Encoding", "Search", "Debug", "Tools"
+    };
+    return allowed.contains(name);
 }
 
 void ShortcutManager::applyTo(QList<QAction *> actions)

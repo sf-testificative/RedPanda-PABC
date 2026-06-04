@@ -52,4 +52,6 @@ private:
 
 using PShortcutManager = std::shared_ptr<ShortcutManager>;
 
+bool isShortcutSectionAllowed(const QString& name);
+
 #endif // SHORTCUTMANAGER_H

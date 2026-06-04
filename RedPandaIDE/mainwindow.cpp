@@ -43,6 +43,7 @@
 #include <QCompleter>
 #include <QUuid>
 #include <QScrollBar>
+#include <QSet>
 #include <QTextDocumentFragment>
 #include <QActionGroup>
 
@@ -1632,9 +1633,32 @@ void MainWindow::updateShortcuts()
 {
     ShortcutManager manager;
     manager.load();
-    // foreach(QAction* action, listShortCutableActions())
-    //     qDebug()<<action->text()<<action->objectName();
-    manager.applyTo(listShortCutableActions());
+    QList<QAction*> actions = listShortCutableActions();
+    manager.applyTo(actions);
+
+    QSet<QAction*> allowedActions;
+    QList<QMenu*> menus = findChildren<QMenu*>();
+    foreach (const QMenu* menu, menus) {
+        if (!isShortcutSectionAllowed(menu->objectName()))
+            continue;
+        foreach (QAction* action, menu->actions()) {
+            if (!action->text().isEmpty() && action->menu() == nullptr)
+                allowedActions.insert(action);
+        }
+    }
+    foreach (QAction* action, actions) {
+        if (allowedActions.contains(action))
+            continue;
+        QString groupName = action->data().toString();
+        if (!groupName.isEmpty() && isShortcutSectionAllowed(groupName))
+            allowedActions.insert(action);
+    }
+    foreach (QAction* action, actions) {
+        if (!allowedActions.contains(action)) {
+            action->setShortcut(QKeySequence());
+            action->setToolTip(action->text());
+        }
+    }
 }
 
 QPlainTextEdit *MainWindow::txtLocals()
