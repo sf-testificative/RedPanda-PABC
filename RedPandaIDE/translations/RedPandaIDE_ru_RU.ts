@@ -4055,8 +4055,8 @@
         <message>
             <location filename="../mainwindow.ui" line="14" />
             <location filename="../mainwindow.cpp" line="1343" />
-            <source>Red Panda C++</source>
-            <translation>Red Panda C++</translation>
+            <source>Red Panda PABC</source>
+            <translation>Red Panda PABC</translation>
         </message>
         <message>
             <location filename="../mainwindow.ui" line="128" />

@@ -1386,7 +1386,7 @@ void MainWindow::updateAppTitle()
 
 void MainWindow::updateAppTitle(const Editor *e)
 {
-    QString appName=tr("Red Panda C++");
+    QString appName=tr("RedPanda PABC");
 #ifdef APP_VERSION_SUFFIX
     appName += tr(" %1 Version").arg(APP_VERSION_SUFFIX);
 #endif
