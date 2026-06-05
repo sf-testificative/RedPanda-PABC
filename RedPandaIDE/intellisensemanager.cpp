@@ -32,7 +32,8 @@ void IntelliSenseManager::initializeLSP(const QString& filename) {
     QJsonObject lspParams;
     lspParams["processId"] = static_cast<int>(QCoreApplication::applicationPid());
 
-    QUrl rootUrl = QUrl::fromLocalFile(QFileInfo(filename).canonicalFilePath());
+    QString canonicalPath = QFileInfo(filename).canonicalFilePath();
+    QUrl rootUrl = QUrl::fromLocalFile(canonicalPath.isEmpty() ? filename : canonicalPath);
     lspParams["rootUri"] = rootUrl.toString();
 
     // Define capabilities
@@ -74,8 +75,9 @@ QStringList IntelliSenseManager::callIntelli(const QSynedit::BufferCoord& pos, c
         {"character", pos.ch - 1}
     };
 
+    QString canonicalPath = QFileInfo(filename).canonicalFilePath();
     QJsonObject textDocument{
-        {"uri", QUrl::fromLocalFile(QFileInfo(filename).canonicalFilePath()).toString()}
+        {"uri", QUrl::fromLocalFile(canonicalPath.isEmpty() ? filename : canonicalPath).toString()}
     };
 
     QJsonObject resultJSON{
@@ -116,8 +118,11 @@ void IntelliSenseManager::didChange(const QString& filename, const QString& full
         {"jsonrpc", "2.0"},
         {"method", "textDocument/didChange"},
         {"params", QJsonObject{
-                       {"textDocument", QJsonObject{
-                                            {"uri", QUrl::fromLocalFile(QFileInfo(filename).canonicalFilePath()).toString()},
+                        {"textDocument", QJsonObject{
+                                             {"uri", [&](){
+                                                 QString cp = QFileInfo(filename).canonicalFilePath();
+                                                 return QUrl::fromLocalFile(cp.isEmpty() ? filename : cp).toString();
+                                             }()},
                                             {"version", ++documentVersions[filename]}
                                         }},
                        {"contentChanges", QJsonArray{
@@ -156,8 +161,10 @@ void IntelliSenseManager::startIntelli() {
 }
 
 void IntelliSenseManager::didOpen(const QString& filename, Editor* editor) {
-    QUrl fileUrl = QUrl::fromLocalFile(QFileInfo(filename).canonicalFilePath());
-    editor->setFilename(QFileInfo(filename).canonicalFilePath());
+    QString canonicalPath = QFileInfo(filename).canonicalFilePath();
+    if (!canonicalPath.isEmpty())
+        editor->setFilename(canonicalPath);
+    QUrl fileUrl = QUrl::fromLocalFile(canonicalPath.isEmpty() ? filename : canonicalPath);
 
     QJsonObject textDocument{
         {"uri", fileUrl.toString(QUrl::FullyEncoded)},

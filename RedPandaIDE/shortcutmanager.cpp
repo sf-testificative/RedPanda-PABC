@@ -119,7 +119,7 @@ void ShortcutManager::setShortcuts(QList<PEnvironmentShortcut> shortcuts)
 
 bool isShortcutSectionAllowed(const QString& name) {
     static const QStringList allowed = {
-        "menuEdit", "menuSelection", "menuView", "menuSearch",
+        "menuFile", "menuEdit", "menuSelection", "menuView", "menuSearch",
         "menuCode", "menuRefactor", "menuExecute", "menuTools",
         "menuWindow",
         "menuMove_Caret", "menuTool_Windows",

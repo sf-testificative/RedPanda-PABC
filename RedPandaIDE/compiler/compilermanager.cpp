@@ -28,6 +28,7 @@
 #include "utils.h"
 #include "utils/parsearg.h"
 #include "../systemconsts.h"
+#include <QStandardPaths>
 #include "../settings.h"
 #include <QMessageBox>
 #include <QUuid>
@@ -239,6 +240,17 @@ void CompilerManager::run(
         redirectInputFilename = pSettings->executor().inputFilename();
     }
     ExecutableRunner * execRunner;
+#ifdef Q_OS_LINUX
+    QString monoPath;
+    if (QString(filename).endsWith(".exe", Qt::CaseInsensitive)) {
+        monoPath = QStandardPaths::findExecutable("mono");
+        if (monoPath.isEmpty()) {
+            QMessageBox::critical(pMainWindow, tr("Mono not found"),
+                                  tr("Mono runtime is required to run this program."));
+            return;
+        }
+    }
+#endif
     if (programHasConsole(filename)) {
         int consoleFlag=0;
         if (redirectInput)
@@ -282,6 +294,12 @@ void CompilerManager::run(
 #ifdef Q_OS_MACOS
         sharedMemoryId = sharedMemoryId.mid(0, PSHMNAMLEN);
 #endif
+        QStringList exeAndArgs;
+#ifdef Q_OS_LINUX
+        if (!monoPath.isEmpty())
+            exeAndArgs << monoPath;
+#endif
+        exeAndArgs << localizePath(filename) << parseArgumentsWithoutVariables(arguments);
         if (consoleFlag!=0) {
             QString consolePauserPath=includeTrailingPathDelimiter(pSettings->dirs().appLibexecDir())+"consolepauser";
             if (!fileExists(consolePauserPath)) {
@@ -298,20 +316,16 @@ void CompilerManager::run(
                     QString::number(consoleFlag),
                     sharedMemoryId,
                     redirectInputFilename,
-                    localizePath(filename),
-                } + parseArgumentsWithoutVariables(arguments);
+                } + exeAndArgs;
             } else {
                 execArgs = QStringList{
                     consolePauserPath,
                     QString::number(consoleFlag),
                     sharedMemoryId,
-                    localizePath(filename),
-                } + parseArgumentsWithoutVariables(arguments);
+                } + exeAndArgs;
             }
         } else {
-            execArgs = QStringList{
-                localizePath(filename),
-            } + parseArgumentsWithoutVariables(arguments);
+            execArgs = exeAndArgs;
         }
         auto [filename, args, fileOwner] = wrapCommandForTerminalEmulator(
             pSettings->environment().terminalPath(),
@@ -325,6 +339,11 @@ void CompilerManager::run(
         execRunner->setStartConsole(true);
     } else {
         //delete when thread finished
+#ifdef Q_OS_LINUX
+        if (!monoPath.isEmpty()) {
+            execRunner = new ExecutableRunner(monoPath, QStringList{localizePath(filename)} + parseArgumentsWithoutVariables(arguments), workDir);
+        } else
+#endif
         execRunner = new ExecutableRunner(filename, parseArgumentsWithoutVariables(arguments), workDir);
     }
     if (redirectInput) {
@@ -369,7 +388,18 @@ void CompilerManager::doRunProblem(const QString &filename, const QString &argum
     if (mRunner!=nullptr) {
         return;
     }
-    OJProblemCasesRunner * execRunner = new OJProblemCasesRunner(filename, parseArgumentsWithoutVariables(arguments), workDir, problemCases);
+    QString actualFilename = filename;
+    QStringList actualArgs = parseArgumentsWithoutVariables(arguments);
+#ifdef Q_OS_LINUX
+    if (actualFilename.endsWith(".exe", Qt::CaseInsensitive)) {
+        QString monoPath = QStandardPaths::findExecutable("mono");
+        if (!monoPath.isEmpty()) {
+            actualFilename = monoPath;
+            actualArgs.prepend(filename);
+        }
+    }
+#endif
+    OJProblemCasesRunner * execRunner = new OJProblemCasesRunner(actualFilename, actualArgs, workDir, problemCases);
     mRunner = execRunner;
     if (pSettings->executor().enableCaseLimit()) {
         execRunner->setExecTimeout(pSettings->executor().caseTimeout());
