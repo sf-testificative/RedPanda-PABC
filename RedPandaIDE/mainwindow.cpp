@@ -1388,7 +1388,7 @@ void MainWindow::updateAppTitle(const Editor *e)
 {
     QString appName=tr("RedPanda PABC");
 #ifdef APP_VERSION_SUFFIX
-    appName += tr(" %1 Version").arg(APP_VERSION_SUFFIX);
+    // appName += tr(" %1 Version").arg(APP_VERSION_SUFFIX);
 #endif
     QCoreApplication *app = QApplication::instance();
     if (e && !e->inProject()) {
@@ -1398,23 +1398,23 @@ void MainWindow::updateAppTitle(const Editor *e)
         else
           str = e->filename();
         if (mDebugger->executing()) {
-            setWindowTitle(QString("%1 - [%2] - %3 %4")
-                           .arg(str,tr("Debugging"),appName,REDPANDA_CPP_VERSION));
+            setWindowTitle(QString("%1 - [%2] - %3")
+                           .arg(str,tr("Debugging"),appName));
             app->setApplicationName(QString("%1 - [%2] - %3")
                                     .arg(str,tr("Debugging"),appName));
         } else if (mCompilerManager->running()) {
-            setWindowTitle(QString("%1 - [%2] - %3 %4")
-                           .arg(str,tr("Running"),appName,REDPANDA_CPP_VERSION));
+            setWindowTitle(QString("%1 - [%2] - %3")
+                           .arg(str,tr("Running"),appName));
             app->setApplicationName(QString("%1 - [%2] - %3")
                                     .arg(str,tr("Running"),appName));
         } else if (mCompilerManager->compiling()) {
-            setWindowTitle(QString("%1 - [%2] - %3 %4")
-                           .arg(str,tr("Compiling"),appName,REDPANDA_CPP_VERSION));
+            setWindowTitle(QString("%1 - [%2] - %3")
+                           .arg(str,tr("Compiling"),appName));
             app->setApplicationName(QString("%1 - [%2] - %3")
                                     .arg(str,tr("Compiling"),appName));
         } else {
-            this->setWindowTitle(QString("%1 - %2 %3")
-                                 .arg(str,appName,REDPANDA_CPP_VERSION));
+            this->setWindowTitle(QString("%1 - %2")
+                                 .arg(str,appName));
             app->setApplicationName(QString("%1 - %2")
                                     .arg(str,appName));
         }

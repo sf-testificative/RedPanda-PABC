@@ -299,8 +299,9 @@ int main(int argc, char** argv) {
     }
 
     // Done? Print return value of executed program
-    printf("\n--------------------------------");
-    printf("\nPascalABC.NET соизволил завершить свою работу после %.4g секунд с возвращаемым значением %lu (%.4g мс процессорного времени, %lld KБ памяти использовано).\n",seconds,returnvalue, execSeconds, peakMemory);
+    // printf("\n--------------------------------");
+    // printf("\nPascalABC.NET соизволил завершить свою работу после %.4g секунд с возвращаемым значением %lu (%.4g мс процессорного времени, %lld KБ памяти использовано).\n",seconds,returnvalue, execSeconds, peakMemory);
+    printf("\n");
     PauseExit(returnvalue,reInp);
     return 0;
 }

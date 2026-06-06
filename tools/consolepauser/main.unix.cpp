@@ -194,17 +194,17 @@ int main(int argc, char** argv) {
     }
 
     // Save starting timestamp
-    auto starttime = std::chrono::high_resolution_clock::now();
+    // auto starttime = std::chrono::high_resolution_clock::now();
 
     // Execute the command
     long int peakMemory;
     int returnvalue = ExecuteCommand(command,reInp, peakMemory);
 
     // Get ending timestamp
-    auto endtime = std::chrono::high_resolution_clock::now();
-    auto difftime = endtime - starttime;
-    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(difftime);
-    double seconds = milliseconds.count()/1000.0;
+    // auto endtime = std::chrono::high_resolution_clock::now();
+    // auto difftime = endtime - starttime;
+    // auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(difftime);
+    // double seconds = milliseconds.count()/1000.0;
 
     if (pBuf) {
         strcpy(pBuf,"FINISHED");
@@ -215,8 +215,9 @@ int main(int argc, char** argv) {
     }
 
     // Done? Print return value of executed program
-    printf("\n--------------------------------");
-    printf("\nПроцесс завершил работу после %.4g секунд с возвращаемым значением %d, %ld КБ памяти было использовано.\n",seconds,returnvalue,peakMemory);
+    // printf("\n--------------------------------");
+    // printf("\nПроцесс завершил работу после %.4g секунд с возвращаемым значением %d, %ld КБ памяти было использовано.\n",seconds,returnvalue,peakMemory);
+    printf("\n");
     if (pauseAfterExit)
         PauseExit(returnvalue,reInp);
     return 0;
