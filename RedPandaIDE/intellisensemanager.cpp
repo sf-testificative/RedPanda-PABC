@@ -168,16 +168,9 @@ void IntelliSenseManager::startIntelli() {
 }
 
 void IntelliSenseManager::didOpen(const QString& filename, Editor* editor) {
-    //QString canonicalPath = QFileInfo(filename).canonicalFilePath();
-    //if (!canonicalPath.isEmpty())
-    //    editor->setFilename(canonicalPath);
-    //else
-    //    return;
     QString canonicalPath = QFileInfo(filename).absoluteFilePath();
-    if (!canonicalPath.isEmpty())
+    if (QFileInfo::exists(canonicalPath))
         editor->setFilename(canonicalPath);
-    //QUrl fileUrl = QUrl::fromLocalFile(canonicalPath.isEmpty() ? filename : canonicalPath);
-    //QUrl fileUrl = QUrl::fromLocalFile(canonicalPath);
     QUrl fileUrl = QUrl::fromLocalFile(canonicalPath);
 
     QJsonObject textDocument{
